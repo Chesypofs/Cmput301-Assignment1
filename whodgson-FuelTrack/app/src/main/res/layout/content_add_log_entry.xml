@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="william.whodgson_fueltrack.AddLogEntry"
+    tools:showIn="@layout/activity_add_log_entry">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_text" />
+
+        <EditText
+            android:id="@+id/date_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/date_hint"
+            android:inputType="date"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/station_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station_text" />
+
+        <EditText
+            android:id="@+id/station_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/station_hint"
+            android:inputType="text"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/odometer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/odometer_text" />
+
+        <EditText
+            android:id="@+id/odometer_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/odometer_hint"
+            android:inputType="numberDecimal"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/fuel_grade_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_grade_text" />
+
+        <EditText
+            android:id="@+id/fuel_grade_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/fuel_grade_hint"
+            android:inputType="text"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/fuel_amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_amount_text" />
+
+        <EditText
+            android:id="@+id/fuel_amount_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/fuel_amount_hint"
+            android:inputType="numberDecimal"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/fuel_unit_cost_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_unit_cost_text" />
+
+        <EditText
+            android:id="@+id/fuel_unit_cost_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/fuel_unit_cost_hint"
+            android:inputType="numberDecimal"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <TextView
+            android:id="@+id/fuel_cost_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fuel_cost_text" />
+
+        <EditText
+            android:id="@+id/fuel_cost_enter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/fuel_cost_hint"
+            android:inputType="numberDecimal"
+            android:minWidth="100dp"
+            android:textColorHint="#70808080" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="william.whodgson_fueltrack.AddLogEntry"
+        tools:showIn="@layout/activity_add_log_entry">
+
+        <Button
+            android:id="@+id/add_to_log_add_to_log_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_log_add_to_log_button_text"/>
+        <Button
+            android:id="@+id/add_to_log_cancel_log_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_log_cancel_log_button_text"/>
+    </LinearLayout>
+</LinearLayout>
