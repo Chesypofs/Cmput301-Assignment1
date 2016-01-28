@@ -1,24 +1,18 @@
 package william.whodgson_fueltrack;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ViewLog extends AppCompatActivity {
 
@@ -28,79 +22,74 @@ public class ViewLog extends AppCompatActivity {
         setContentView(R.layout.activity_view_log);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Bundle bundle = getIntent().getExtras();
+        final File file = (File) bundle.get("FILE");
+        final Log log = new Log(getApplicationContext(), file);
 
-        ArrayList<String[]> logList = new ArrayList<String[]>();
         String[] fields = {"Date: ", "Station: ", "Odometer: ", "Fuel Grade: ", "Fuel Amount: ",
                 "Fuel Unit Cost: ", "Fuel Cost: "};
-
-        try {
-            InputStream logStream = openFileInput("log.txt");
-            if (logStream != null) {
-                int i = 0;
-
-                InputStreamReader logReader = new InputStreamReader(logStream);
-                BufferedReader bufferedReader = new BufferedReader(logReader);
-                String line = "";
-                String[] logEntry = new String[7];
-                while ((line = bufferedReader.readLine()) != null) {
-                    logEntry[i] = fields[i] + line;
-                    i++;
-                    if (i == 7) {
-                        i = 0;
-                        logEntry[2] = logEntry[2] + "km";
-                        logEntry[4] = logEntry[4] + "L";
-                        logEntry[5] = logEntry[5] + "¢/L";
-                        logEntry[6] = logEntry[6] + "$";
-                        logList.add(logEntry);
-                        logEntry = new String[7];
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
 
-        for (String[] stringArray : logList) {
+        for (int i = 0; i < log.getLength(); i++) {
+            LogEntry logEntry = log.getLogEntry(i);
+            String[] stringArray = {
+                    fields[0] + dateFormat.format(logEntry.getDate()),
+                    fields[1] + logEntry.getStation(),
+                    fields[2] + Float.toString(logEntry.getOdometer()),
+                    fields[3] + logEntry.getFuelGrade(),
+                    fields[4] + Float.toString(logEntry.getFuelAmount()),
+                    fields[5] + Float.toString(logEntry.getFuelUnitCost()),
+                    fields[6] + Float.toString(logEntry.getFuelCost()) };
+
             GridLayout logLayout = new GridLayout(layout.getContext());
             logLayout.setOrientation(GridLayout.VERTICAL);
             logLayout.setColumnCount(3);
             logLayout.setRowCount(4);
             logLayout.setPadding(0,16,0,16);
-            int i = 0, j = 0;
+            int j = 0, k = 0;
             for (String string : stringArray) {
                 TextView view = new TextView(this);
                 view.setText(string);
                 view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                if (i == 3) i = 0;
-                if (j == 4) {
-                    i++;
-                    j = 0;
+                if (j == 3) j = 0;
+                if (k == 4) {
+                    j++;
+                    k = 0;
                 }
-                GridLayout.Spec col = GridLayout.spec(GridLayout.UNDEFINED, i);
-                GridLayout.Spec row = GridLayout.spec(GridLayout.UNDEFINED, j);
+                GridLayout.Spec col = GridLayout.spec(GridLayout.UNDEFINED, j);
+                GridLayout.Spec row = GridLayout.spec(GridLayout.UNDEFINED, k);
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                params.columnSpec = GridLayout.spec(i);
-                params.rowSpec = GridLayout.spec(j);
+                params.columnSpec = GridLayout.spec(j);
+                params.rowSpec = GridLayout.spec(k);
                 params.setMargins(16,0,16,0);
                 view.setLayoutParams(params);
                 logLayout.addView(view);
-                j++;
+                k++;
             }
             GridLayout.Spec col = GridLayout.spec(GridLayout.UNDEFINED, 2);
             GridLayout.Spec row = GridLayout.spec(GridLayout.UNDEFINED, 2);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.columnSpec = GridLayout.spec(2);
-            params.rowSpec = GridLayout.spec(2);
-            params.setMargins(16,0,16,0);
+            params.rowSpec = GridLayout.spec(1, 3);
+            params.setMargins(16, 0, 16, 0);
             Button button = new Button(logLayout.getContext());
             button.setLayoutParams(params);
+            button.setText("Edit");
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), GetLogEntry.class);
+                    final Bundle bundle = new Bundle();
+                    bundle.putSerializable("FILE", file);
+                    bundle.putBoolean("EDIT", true);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
             logLayout.addView(button);
             layout.addView(logLayout);
         }

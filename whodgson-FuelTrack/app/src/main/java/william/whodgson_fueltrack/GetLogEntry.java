@@ -23,13 +23,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-//http://stackoverflow.com/questions/14376807/how-to-read-write-string-from-a-file-in-android
-public class AddLogEntry extends AppCompatActivity {
+public class GetLogEntry extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_log_entry);
+        Bundle bundle = getIntent().getExtras();
+        final Boolean edit = (Boolean) bundle.get("EDIT");
+        final File file = (File) bundle.get("FILE");
+        final Log log = new Log(getApplicationContext(), file);
+        final int editIndex;
+        if (edit) {
+            editIndex = getIntent().getIntExtra("EDITINDEX", -1);
+        } else {
+            editIndex = -1;
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,8 +66,10 @@ public class AddLogEntry extends AppCompatActivity {
                 Boolean properInput = true;
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 String dateStr = date.getText().toString().trim();
+                Date parsedDate = new Date();
+                float parsedOdometer = 0, parsedFuelAmount = 0, parsedFuelUnitCost = 0, parsedFuelCost = 0;
                 try {
-                    Date parsedDate = format.parse(dateStr);
+                    parsedDate = format.parse(dateStr);
                 } catch (ParseException e) {
                     date.setError("Please enter date in yyyy-mm-dd format");
                     properInput = false;
@@ -71,7 +83,7 @@ public class AddLogEntry extends AppCompatActivity {
 
                 String odometerStr = odometer.getText().toString().trim();
                 try {
-                    float parsedOdometer = Float.parseFloat(odometerStr);
+                    parsedOdometer = Float.parseFloat(odometerStr);
                 } catch (NumberFormatException e) {
                     odometer.setError("Please enter odometer reading in kilometers");
                     properInput = false;
@@ -85,7 +97,7 @@ public class AddLogEntry extends AppCompatActivity {
 
                 String fuelAmountStr = fuelAmount.getText().toString().trim();
                 try {
-                    float parsedFuelAmount = Float.parseFloat(fuelAmountStr);
+                    parsedFuelAmount = Float.parseFloat(fuelAmountStr);
                 } catch (NumberFormatException e) {
                     fuelAmount.setError("Please enter a fuel amount in liters");
                     properInput = false;
@@ -93,7 +105,7 @@ public class AddLogEntry extends AppCompatActivity {
 
                 String fuelUnitCostStr = fuelUnitCost.getText().toString().trim();
                 try {
-                    float parsedFuelUnitCost = Float.parseFloat(fuelUnitCostStr);
+                    parsedFuelUnitCost = Float.parseFloat(fuelUnitCostStr);
                 } catch (NumberFormatException e) {
                     fuelUnitCost.setError("Please enter a fuel unit cost in cents/L");
                     properInput = false;
@@ -101,7 +113,7 @@ public class AddLogEntry extends AppCompatActivity {
 
                 String fuelCostStr = fuelCost.getText().toString().trim();
                 try {
-                    float parsedFuelCost = Float.parseFloat(fuelCostStr);
+                    parsedFuelCost = Float.parseFloat(fuelCostStr);
                 } catch (NumberFormatException e) {
                     fuelCost.setError("Please enter a fuel cost in dollars");
                     properInput = false;
@@ -109,35 +121,14 @@ public class AddLogEntry extends AppCompatActivity {
 
                 // Write to log
                 if (properInput) {
-                    File logFile = new File(getFilesDir(), "log.txt");
-                    if (!logFile.exists()) {
-                        try {
-                            logFile.createNewFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    OutputStream logStream = null;
-                    try {
-                        logStream = new FileOutputStream(logFile, true);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    OutputStreamWriter logWriter = new OutputStreamWriter(logStream);
-                    try {
-                        logWriter.append(dateStr + "\n");
-                        logWriter.append(stationStr+"\n");
-                        logWriter.append(odometerStr+"\n");
-                        logWriter.append(fuelGradeStr+"\n");
-                        logWriter.append(fuelAmountStr+"\n");
-                        logWriter.append(fuelUnitCostStr+"\n");
-                        logWriter.append(fuelCostStr+"\n");
-                        logStream.flush();
-                        logWriter.flush();
-                        logStream.close();
-                        logWriter.flush();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (edit) {
+                        LogEntry logEntry = new LogEntry(parsedDate, stationStr, parsedOdometer, fuelGradeStr,
+                                parsedFuelAmount, parsedFuelUnitCost, parsedFuelCost);
+                        log.editLogEntry(editIndex, logEntry);
+                    } else {
+                        LogEntry logEntry = new LogEntry(parsedDate, stationStr, parsedOdometer, fuelGradeStr,
+                                parsedFuelAmount, parsedFuelUnitCost, parsedFuelCost);
+                        log.addLogEntry(logEntry);
                     }
                     finish();
                 }

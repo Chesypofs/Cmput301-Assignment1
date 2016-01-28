@@ -5,7 +5,7 @@
     <string name="button_add_log_entry">Add New Log Entry</string>
     <string name="button_exit">Exit</string>
     <string name="title_activity_view_log">ViewLog</string>
-    <string name="title_activity_add_log_entry">AddLogEntry</string>
+    <string name="title_activity_get_log_entry">AddLogEntry</string>
     <string name="date_hint">yyyy-mm-dd</string>
     <string name="date_text">Date:</string>
     <string name="station_hint">Station</string>
