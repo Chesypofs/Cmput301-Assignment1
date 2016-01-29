@@ -64,6 +64,10 @@ public class Log {
         return this.log.get(logIndex);
     }
 
+    public ArrayList<LogEntry> getLog() {
+        return this.log;
+    }
+
     public int getLength() {
         return this.length;
     }

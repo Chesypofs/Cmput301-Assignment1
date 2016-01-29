@@ -125,6 +125,7 @@ public class GetLogEntry extends AppCompatActivity {
                         LogEntry logEntry = new LogEntry(parsedDate, stationStr, parsedOdometer, fuelGradeStr,
                                 parsedFuelAmount, parsedFuelUnitCost, parsedFuelCost);
                         log.editLogEntry(editIndex, logEntry);
+
                     } else {
                         LogEntry logEntry = new LogEntry(parsedDate, stationStr, parsedOdometer, fuelGradeStr,
                                 parsedFuelAmount, parsedFuelUnitCost, parsedFuelCost);
