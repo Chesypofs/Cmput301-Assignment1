@@ -1,5 +1,8 @@
 package william.whodgson_fueltrack;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -18,15 +21,19 @@ public class LogEntry {
                     float fuelUnitCost, float fuelCost) {
         this.date = date;
         this.station = station;
-        this.odometer = odometer;
+        DecimalFormat df = new DecimalFormat("0000000.0");
+        this.odometer = Float.parseFloat(df.format(odometer));
         this.fuelGrade = fuelGrade;
-        this.fuelAmount = fuelAmount;
-        this.fuelUnitCost = fuelUnitCost;
-        this.fuelCost = fuelCost;
+        df = new DecimalFormat("0000.000");
+        this.fuelAmount = Float.parseFloat(df.format(fuelAmount));
+        df = new DecimalFormat("000.0");
+        this.fuelUnitCost = Float.parseFloat(df.format(fuelUnitCost));
+        df = new DecimalFormat("000000.00");
+        this.fuelCost = Float.parseFloat(df.format(fuelCost));
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     public void setDate(Date date) {
@@ -34,7 +41,7 @@ public class LogEntry {
     }
 
     public String getStation() {
-        return station;
+        return this.station;
     }
 
     public void setStation(String station) {
@@ -42,7 +49,7 @@ public class LogEntry {
     }
 
     public float getOdometer() {
-        return odometer;
+        return this.odometer;
     }
 
     public void setOdometer(float odometer) {
@@ -50,7 +57,7 @@ public class LogEntry {
     }
 
     public String getFuelGrade() {
-        return fuelGrade;
+        return this.fuelGrade;
     }
 
     public void setFuelGrade(String fuelGrade) {
@@ -58,7 +65,7 @@ public class LogEntry {
     }
 
     public float getFuelAmount() {
-        return fuelAmount;
+        return this.fuelAmount;
     }
 
     public void setFuelAmount(float fuelAmount) {
@@ -66,7 +73,7 @@ public class LogEntry {
     }
 
     public float getFuelUnitCost() {
-        return fuelUnitCost;
+        return this.fuelUnitCost;
     }
 
     public void setFuelUnitCost(float fuelUnitCost) {
@@ -74,10 +81,11 @@ public class LogEntry {
     }
 
     public float getFuelCost() {
-        return fuelCost;
+        return this.fuelCost;
     }
 
     public void setFuelCost(float fuelCost) {
         this.fuelCost = fuelCost;
     }
+
 }

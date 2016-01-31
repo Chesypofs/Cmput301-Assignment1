@@ -54,6 +54,10 @@ public class Log {
         }
     }
 
+    public Boolean hasLogEntry(LogEntry logEntry) {
+        return this.log.contains(logEntry);
+    }
+
     public void addLogEntry(LogEntry newLog) {
         this.log.add(newLog);
         this.saveToFile();

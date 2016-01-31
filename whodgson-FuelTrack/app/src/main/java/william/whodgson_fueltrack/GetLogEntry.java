@@ -1,9 +1,6 @@
 package william.whodgson_fueltrack;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,11 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,13 +53,25 @@ public class GetLogEntry extends AppCompatActivity {
         final Button addToLogAddToLogButton = (Button) findViewById(R.id.add_to_log_add_to_log_button);
         final Button addToLogCancelLogButton = (Button) findViewById(R.id.add_to_log_cancel_log_button);
 
+        if (edit) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            date.setText(dateFormat.format(log.getLogEntry(editIndex).getDate()));
+            station.setText(log.getLogEntry(editIndex).getStation());
+            odometer.setText(Float.toString(log.getLogEntry(editIndex).getOdometer()));
+            fuelGrade.setText(log.getLogEntry(editIndex).getFuelGrade());
+            fuelAmount.setText(Float.toString(log.getLogEntry(editIndex).getFuelAmount()));
+            fuelUnitCost.setText(Float.toString(log.getLogEntry(editIndex).getFuelUnitCost()));
+            fuelCost.setText(Float.toString(log.getLogEntry(editIndex).getFuelCost()));
+            addToLogAddToLogButton.setText("EDIT ENTRY");
+        }
+
         addToLogAddToLogButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Boolean properInput = true;
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 String dateStr = date.getText().toString().trim();
                 Date parsedDate = new Date();
-                float parsedOdometer = 0, parsedFuelAmount = 0, parsedFuelUnitCost = 0, parsedFuelCost = 0;
+                float parsedOdometer = -1, parsedFuelAmount = -1, parsedFuelUnitCost = -1, parsedFuelCost = -1;
                 try {
                     parsedDate = format.parse(dateStr);
                 } catch (ParseException e) {
@@ -115,8 +119,13 @@ public class GetLogEntry extends AppCompatActivity {
                 try {
                     parsedFuelCost = Float.parseFloat(fuelCostStr);
                 } catch (NumberFormatException e) {
-                    fuelCost.setError("Please enter a fuel cost in dollars");
-                    properInput = false;
+                    if ((parsedFuelUnitCost == -1) || (parsedFuelAmount == -1)) {
+                        fuelCost.setError("Please enter a fuel cost in dollars");
+                        properInput = false;
+                    }
+                    else {
+                        parsedFuelCost = parsedFuelUnitCost * parsedFuelAmount / 100;
+                    }
                 }
 
                 // Write to log
@@ -125,6 +134,11 @@ public class GetLogEntry extends AppCompatActivity {
                         LogEntry logEntry = new LogEntry(parsedDate, stationStr, parsedOdometer, fuelGradeStr,
                                 parsedFuelAmount, parsedFuelUnitCost, parsedFuelCost);
                         log.editLogEntry(editIndex, logEntry);
+                        float total = 0;
+                        for (int i = 0; i < log.getLength(); i++) {
+                            total += log.getLogEntry(i).getFuelCost();
+                        }
+                        ViewLog.totalFuelCostView.setText(Float.toString(total));
 
                     } else {
                         LogEntry logEntry = new LogEntry(parsedDate, stationStr, parsedOdometer, fuelGradeStr,
