@@ -26,6 +26,9 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testHasLogEntry() {
+        // This line and the lines like it in each method taken from:
+        // http://stackoverflow.com/questions/10539049/creating-files-in-android-junit
+        // user: yorkw, date: 2016-01-31
         File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
         File file = new File (f, "testHasLogEntry.txt");
         Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
