@@ -2,6 +2,19 @@ package william.whodgson_fueltrack;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
+
 import william.whodgson_fueltrack.LogEntry;
 
 /**
@@ -12,9 +25,10 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
         super(Log.class);
     }
 
-    publib void testHasLogEntry() {
-        File file = new File("testHasLogEntry.txt");
-        Log log = new Log(getApplicationContext(), file);
+    public void testHasLogEntry() {
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testHasLogEntry.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, " ", 0, " ", 0, 0, 0);
         assertFalse(log.hasLogEntry(logEntry));
@@ -24,8 +38,9 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAddLogEntry() {
-        File file = new File("testAddLogEntry.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testAddLogEntry.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, " ", 0, " ", 0, 0, 0);
         assertFalse(log.hasLogEntry(logEntry));
@@ -35,8 +50,9 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetLogEntry() {
-        File file = new File("testGetLogEntry.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testGetLogEntry.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, " ", 0, " ", 0, 0, 0);
         log.addLogEntry(logEntry);
@@ -52,21 +68,23 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetLength() {
-        File file = new File("testGetLength.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testGetLength.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, " ", 0, " ", 0, 0, 0);
         assertEquals(log.getLength(), 0);
         log.addLogEntry(logEntry);
         assertEquals(log.getLength(), 1);
-        log.deleteLogEntry(logEntry);
+        log.deleteLogEntry(0);
         assertEquals(log.getLength(), 0);
         file.delete();
     }
 
     public void testGetLog() {
-        File file = new File("testGetLog.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testGetLog.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry1 = new LogEntry(date, "1", 1, "1", 1, 1, 1);
         LogEntry logEntry2 = new LogEntry(date, "2", 2, "2", 2, 2, 2);
@@ -103,8 +121,9 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testEditLogEntry() {
-        File file = new File("testEditLogEntry.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testEditLogEntry.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, "1", 0, " ", 0, 0, 0);
         log.addLogEntry(logEntry);
@@ -130,22 +149,24 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testDeleteLogEntry() {
-        File file = new File("testDeleteLogEntry.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testDeleteLogEntry.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, " ", 0, " ", 0, 0, 0);
-        assertFalse(log.hasLogEntry(logEntry);
+        assertFalse(log.hasLogEntry(logEntry));
         log.addLogEntry(logEntry);
-        assertTrue(log.hasLogEntry(logEntry);
+        assertTrue(log.hasLogEntry(logEntry));
         log.deleteLogEntry(0);
-        assertFalse(log.hasLogEntry(logEntry);
+        assertFalse(log.hasLogEntry(logEntry));
         file.delete();
     }
 
     // called in addToFile and editLogEntry
     public void testSaveToFile() {
-        File file = new File("testSaveToFile.txt");
-        Log log = new Log(getApplicationContext(), file);
+        File f = this.getInstrumentation().getTargetContext().getDir("tmp", 0);
+        File file = new File (f, "testSaveToFile.txt");
+        Log log = new Log(this.getInstrumentation().getTargetContext().getApplicationContext(), file);
         Date date = new Date();
         LogEntry logEntry = new LogEntry(date, " ", 0, " ", 0, 0, 0);
         log.addLogEntry(logEntry);
@@ -162,10 +183,8 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
                 in = new BufferedReader(new InputStreamReader(fis));
                 Gson gson = new Gson();
                 // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html January 19 2016
-                Type listType = new TypeToken<ArrayList<LogEntry>>() {
-                }.getType();
-                Log savedLog = gson.fromJson(in, listType);
-                ArrayList<LogEntry> returnedLog = savedLog.getLog();
+                Type listType = new TypeToken<ArrayList<LogEntry>>() {}.getType();
+                ArrayList<LogEntry> returnedLog = gson.fromJson(in, listType);
                 LogEntry returnedEntry = returnedLog.get(0);
                 assertEquals(logEntry.getDate(), returnedEntry.getDate());
                 assertEquals(logEntry.getStation(), returnedEntry.getStation());
@@ -178,5 +197,6 @@ public class LogTest extends ActivityInstrumentationTestCase2 {
         } catch (IOException e) {
             throw new RuntimeException();
         }
+        file.delete();
     }
 }

@@ -25,7 +25,7 @@ public class LogEntryTest extends ActivityInstrumentationTestCase2 {
     public void testGetOdometer() {
         Date date = new Date();
         LogEntry entry = new LogEntry(date, " ", 100, " ", 0, 0, 0);
-        assertEquals(entry.getOdometer(), 100);
+        assertEquals(entry.getOdometer(), 100.0f);
     }
     public void testGetFuelGrade() {
         Date date = new Date();
@@ -35,16 +35,16 @@ public class LogEntryTest extends ActivityInstrumentationTestCase2 {
     public void testGetFuelAmount() {
         Date date = new Date();
         LogEntry entry = new LogEntry(date, " ", 0, " ", 100, 0, 0);
-        assertEquals(entry.getFuelAmount(), 100);
+        assertEquals(entry.getFuelAmount(), 100.0f);
     }
     public void testGetFuelUnitCost() {
         Date date = new Date();
         LogEntry entry = new LogEntry(date, " ", 0, " ", 0, 100, 0);
-        assertEquals(entry.getFuelUnitCost(), 100);
+        assertEquals(entry.getFuelUnitCost(), 100.0f);
     }
     public void testGetFuelCost() {
         Date date = new Date();
         LogEntry entry = new LogEntry(date, " ", 0, " ", 0, 0, 100);
-        assertEquals(entry.getFuelCost(), 100);
+        assertEquals(entry.getFuelCost(), 100.0f);
     }
 }

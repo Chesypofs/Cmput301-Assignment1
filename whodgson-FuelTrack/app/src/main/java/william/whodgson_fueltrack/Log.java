@@ -30,6 +30,13 @@ public class Log {
         this.context = context;
         this.file = file;
         this.length = 0;
+        if (!this.file.exists()) {
+            try {
+                this.file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+        }
         if (this.file.exists()) {
             FileInputStream fis = null;
             try {
