@@ -22,6 +22,7 @@ public class LogAdapter extends ArrayAdapter<LogEntry> {
     private Log log;
     private File logFile;
     private TextView totalFuelCostView;
+
     public LogAdapter(Context context, int id, Log log, File logFile, TextView totalFuelCostView) {
         super(context, id, log.getLog());
         this.context = context;
