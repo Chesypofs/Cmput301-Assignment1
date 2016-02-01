@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- *GetLogEntry
+ * GetLogEntry
  * Allows a user to add a new log entry or edit an existing one, and
  * checks to make sure the user enters valid input.
  *
