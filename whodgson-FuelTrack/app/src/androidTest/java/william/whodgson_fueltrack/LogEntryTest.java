@@ -6,6 +6,9 @@ import java.util.Date;
 
 /**
  * Created by William on 2016-01-30.
+ *
+ * LogEntryTest
+ * Tests all the getters and setters in the LogEntry class
  */
 public class LogEntryTest extends ActivityInstrumentationTestCase2 {
     public LogEntryTest() {

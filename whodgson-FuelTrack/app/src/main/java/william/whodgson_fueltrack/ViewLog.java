@@ -7,6 +7,17 @@ import android.widget.TextView;
 
 import java.io.File;
 
+/**
+ * ViewLog
+ * Shows the previously entered log entries and allows the user to
+ * edit or delete log entries. Keeps the screen updated with current
+ * information with the help of the LogAdapter array adapter.
+ *
+ * Problem: In order to dynamically update the total fuel cost in the
+ *          ViewLog, GetLogEntry and LogAdapter access the TextView
+ *          variable of ViewLog.
+ *          Need to change to method call.
+ */
 
 public class ViewLog extends AppCompatActivity {
     private File file;

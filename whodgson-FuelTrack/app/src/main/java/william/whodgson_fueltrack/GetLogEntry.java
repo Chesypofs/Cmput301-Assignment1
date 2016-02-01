@@ -15,6 +15,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ *GetLogEntry
+ * Allows a user to add a new log entry or edit an existing one, and
+ * checks to make sure the user enters valid input.
+ *
+ * Problem: In order to dynamically update the total fuel cost in the
+ *          ViewLog, GetLogEntry accesses a TextView instance variable
+ *          of ViewLog.
+ *          Need to change to method call.
+ */
+
 public class GetLogEntry extends AppCompatActivity {
 
     @Override
@@ -72,6 +83,8 @@ public class GetLogEntry extends AppCompatActivity {
                 String dateStr = date.getText().toString().trim();
                 Date parsedDate = new Date();
                 float parsedOdometer = -1, parsedFuelAmount = -1, parsedFuelUnitCost = -1, parsedFuelCost = -1;
+
+                // Check for valid inputs
                 try {
                     parsedDate = format.parse(dateStr);
                 } catch (ParseException e) {
@@ -138,6 +151,7 @@ public class GetLogEntry extends AppCompatActivity {
                         for (int i = 0; i < log.getLength(); i++) {
                             total += log.getLogEntry(i).getFuelCost();
                         }
+                        //TODO: change this to method call
                         ViewLog.totalFuelCostView.setText(Float.toString(total));
 
                     } else {

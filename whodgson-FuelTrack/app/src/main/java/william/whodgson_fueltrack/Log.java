@@ -19,6 +19,10 @@ import java.util.ArrayList;
 
 /**
  * Created by William on 2016-01-14.
+ *
+ * Log
+ * Keeps track of the created log entries with an ArrayList.
+ * Allows adding, editing, and deleting of log entries.
  */
 public class Log {
     private Context context;

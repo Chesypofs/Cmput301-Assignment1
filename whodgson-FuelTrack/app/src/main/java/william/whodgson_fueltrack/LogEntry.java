@@ -7,7 +7,13 @@ import java.util.Date;
 
 /**
  * Created by William on 2016-01-20.
+ *
+ * LogEntry
+ * Keeps track of a single log entry. Has getters and setters for all of
+ * it's variables but the setters are never used as editing log entries is
+ * done by the Log create a new log entry and deleting the old one.
  */
+
 public class LogEntry {
     private Date date;
     private String station;

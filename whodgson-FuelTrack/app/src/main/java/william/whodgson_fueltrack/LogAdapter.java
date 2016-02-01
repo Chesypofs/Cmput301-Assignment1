@@ -16,7 +16,17 @@ import java.text.SimpleDateFormat;
 
 /**
  * Created by William on 2016-01-29.
+ *
+ * LogAdapter
+ * Dynamically updates the view in ViewLog to show the log entries
+ * contained in the ArrayList of the log.
+ *
+ * Problems: In order to dynamically update the total fuel cost in the
+ *           ViewLog, LogAdapter accesses a TextView instance variable
+ *           of ViewLog.
+ *           Need to change to method call.
  */
+
 public class LogAdapter extends ArrayAdapter<LogEntry> {
     private Context context;
     private Log log;

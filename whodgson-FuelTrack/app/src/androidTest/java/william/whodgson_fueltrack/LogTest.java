@@ -19,7 +19,11 @@ import william.whodgson_fueltrack.LogEntry;
 
 /**
  * Created by William on 2016-01-30.
+ *
+ * LogTest
+ * Tests all the methods in the Log class
  */
+
 public class LogTest extends ActivityInstrumentationTestCase2 {
     public LogTest() {
         super(Log.class);
